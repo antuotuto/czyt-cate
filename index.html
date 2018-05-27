@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>cate</title>
+    <style media="screen">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            height: 100%;
+            background: #eee;
+        }
+
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .sub {
+            display: none;
+        }
+
+        .sub.active {
+            display: block;
+        }
+
+        #cate {
+            height: 100%;
+            width: 220px;
+            background: #777;
+            box-sizing: border-box;
+            padding-top: 20px;
+        }
+
+        ul li {
+            list-style: none;
+            text-align: center;
+        }
+
+        /*@keyframes list {
+            from {
+                transform: translate(200px, 0);
+                opacity: 0;
+            }
+            to {
+                transform: translate(0, 0);
+                opacity: 1;
+            }
+        }*/
+
+        ul li a {
+            cursor: default;
+            border-radius: 5px;
+        }
+
+        #cate a.active {
+            background-color: red;
+        }
+
+        #cate ul li a {
+            height: 30px;
+            margin: 5px 20px 0 20px;
+            height: 50px;
+            display: block;
+            line-height: 50px;
+            animation: list 0.7s;
+        }
+
+        #cate ul li ul li a {
+            background: #fff;
+            margin: 5px 40px 0 40px;
+            height: 40px;
+            display: block;
+            line-height: 40px;
+            font-size: 15px;
+            animation: list 0.4s;
+            color: #333;
+        }
+
+        #cate ul li ul li ul li a {
+            background: #fff;
+            margin: 5px 50px 0 50px;
+            display: block;
+            height: 35px;
+            line-height: 35px;
+            font-size: 13px;
+            animation: list 0.3s;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cate">
+
+    </div>
+
+    <script type="text/javascript" src="./jquery-3.2.0.min.js"></script>
+    <script type="text/javascript">
+        var data = [{
+                title: '王安',
+                children: [{
+                        title: '王安二级',
+                        subtitle: '一些关于我们的回忆',
+                        children: [{
+                                title: '王安三级',
+                            },
+                            {
+                                title: '王安三级'
+                            },
+                            {
+                                title: '王安三级'
+                            }
+                        ]
+                    },
+                    {
+                        title: '王安二级',
+                        children: [{
+                            title: '王安三级',
+
+                        }, {
+                            title: '王安三级',
+
+                        }, {
+                            title: '王安三级',
+
+                        }]
+                    },
+                    {
+                        title: '王安二级',
+                        children: [{
+                            title: '王安三级',
+                        }]
+                    }
+                ]
+            },
+            {
+                title: '孙琼瑶',
+                children: [{
+                    title: '孙琼瑶二级',
+                    children: [{
+                        title: '孙琼瑶三级',
+                    }]
+                }]
+            },
+            {
+                title: '王安安',
+                children: [{
+                    title: '王安安二级',
+                    children: [{
+                        title: '王安安三级'
+                    }]
+                }]
+            }
+        ];
+
+        //    递归
+        function createUl(data) {
+            var ul = document.createElement('ul');
+            for (var i = 0; i < data.length; i++) {
+                // 创建
+                var li = document.createElement('li');
+
+                var a = document.createElement('a');
+                a.innerText = data[i].title;
+                if (data[i].url !== undefined) {
+                    a.setAttribute('href', data[i].url);
+                }
+                li.appendChild(a);
+                if (data[i].children !== undefined) {
+                    ul_sub = createUl(data[i].children);
+                    ul_sub.setAttribute('class', 'sub');
+                    li.appendChild(ul_sub);
+                }
+                ul.appendChild(li);
+            }
+            return ul;
+        }
+
+        // 加入
+        var cate = document.querySelector('#cate');
+        cate.appendChild(createUl(data));
+
+        // 收缩
+        $(function() {
+            $('#cate a').on('click', function(e) {
+                if ($(this).siblings('ul').length > 0) {
+                    $(this).siblings('.sub').find('.sub').removeClass('active');
+                    $('#cate a').removeClass('active');
+                    if ($(this).siblings('ul').hasClass('active')) {
+                        $(this).siblings('ul').removeClass('active');
+                    } else {
+                        $(this).siblings('ul').addClass('active');
+                        $(this).addClass('active');
+                    }
+                }
+
+            });
+        });
+
+        function backNow() {
+
+        }
+    </script>
+</body>
+
+</html>
